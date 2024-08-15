@@ -1,0 +1,52 @@
+{
+  "family": "notification-service-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::339713009115:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "notification-service",
+      "image": "339713009115.dkr.ecr.us-west-2.amazonaws.com/notification-service:latest",
+      "cpu": 256,
+      "memory": 512,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 8080
+        }
+      ],
+      "environment": [
+        {
+          "name": "TWILIO_ACCOUNT_SID",
+          "value": "${TWILIO_ACCOUNT_SID}"
+        },
+        {
+          "name": "TWILIO_AUTH_TOKEN",
+          "value": "${TWILIO_AUTH_TOKEN}"
+        },
+        {
+          "name": "TWILIO_PHONE_NUMBER",
+          "value": "${TWILIO_PHONE_NUMBER}"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/notification-service",
+          "awslogs-region": "us-west-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "healthCheck": {
+        "command": ["CMD-SHELL", "curl -f http://localhost:8080/healthcheck || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 60
+      }
+    }
+  ]
+}
