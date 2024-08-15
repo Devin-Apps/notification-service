@@ -11,6 +11,11 @@ import org.slf4j.LoggerFactory
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import javax.ws.rs.GET
+import javax.ws.rs.Path
+import javax.ws.rs.Produces
+import javax.ws.rs.core.MediaType
+import javax.ws.rs.core.Response
 
 class TwilioConfiguration : Configuration() {
     val twilioSettings: TwilioSettings = TwilioSettings(
@@ -23,6 +28,15 @@ data class TwilioSettings(
     val accountSid: String,
     val authToken: String
 )
+
+@Path("/healthcheck")
+@Produces(MediaType.APPLICATION_JSON)
+class HealthCheckResource {
+    @GET
+    fun healthCheck(): Response {
+        return Response.ok(mapOf("status" to "healthy")).build()
+    }
+}
 
 class NotificationApplication : Application<TwilioConfiguration>() {
 
@@ -53,6 +67,7 @@ class NotificationApplication : Application<TwilioConfiguration>() {
         logger.debug("Initializing Notification Resource")
         val notificationResource = NotificationResource(twilioNotificationRepository)
         environment.jersey().register(notificationResource)
+        environment.jersey().register(HealthCheckResource())
         logger.info("Notification Service started successfully")
     }
 }
