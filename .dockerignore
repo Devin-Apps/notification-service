@@ -1,0 +1,23 @@
+# Version control
+.git
+.gitignore
+
+# Build tools and dependencies
+.mvn
+target/
+*.jar
+
+# IDE-specific files
+.idea
+*.iml
+
+# Logs
+*.log
+
+# Environment files
+.env
+
+# Other unnecessary files
+README.md
+Dockerfile
+docker-compose.yml
