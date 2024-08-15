@@ -1,5 +1,8 @@
 # Notification Service
 
+![CI Status](https://github.com/Devin-Apps/notification-service/actions/workflows/ci.yml/badge.svg)
+![CD Status](https://github.com/Devin-Apps/notification-service/actions/workflows/cd.yml/badge.svg)
+
 This is a containerized notification service application built with Java and Spring Boot. It uses Twilio for sending SMS notifications.
 
 ## Prerequisites
@@ -71,7 +74,4 @@ These variables should be set in the `.env` file.
 If you encounter any issues, please ensure that:
 
 1. Docker and Docker Compose are properly installed and running on your system.
-2. The `.env` file exists and contains the correct Twilio credentials.
-3. The required ports (8080) are not being used by other applications.
-
-For any other issues, please refer to the application logs or contact the development team.
+2. The `.env` file exists and cont
