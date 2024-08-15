@@ -1,0 +1,9 @@
+{
+  "loadBalancers": [
+    {
+      "targetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:339713009115:targetgroup/notification-service-tg/9a4054429eb3f992",
+      "containerName": "notification-service",
+      "containerPort": 8080
+    }
+  ]
+}
