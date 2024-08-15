@@ -11,6 +11,6 @@ logging:
   loggers:
     com.notification.service: DEBUG
 
-twilio:
+twilioSettings:
   accountSid: ${TWILIO_ACCOUNT_SID}
   authToken: ${TWILIO_AUTH_TOKEN}
