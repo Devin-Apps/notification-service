@@ -43,12 +43,12 @@ jobs:
 
     - name: Deploy to Amazon ECS
       run: |
-        aws ecs update-service --cluster notification-cluster --service notification-service --force-new-deployment
+        aws ecs update-service --cluster notification-cluster --service notification-service --force-new-deployment --task-definition notification-service-task:latest
 
     - name: Check ECS service stability and rollback if necessary
       run: |
         echo "Waiting for service to stabilize..."
-        if ! aws ecs wait services-stable --cluster notification-cluster --services notification-service --max-attempts 10; then
+        if ! aws ecs wait services-stable --cluster notification-cluster --services notification-service; then
           echo "Service failed to stabilize. Rolling back to previous task definition."
           TASK_DEFINITION=$(aws ecs describe-services --cluster notification-cluster --services notification-service --query 'services[0].taskDefinition' --output text)
           PREVIOUS_REVISION=$(($(echo $TASK_DEFINITION | awk -F: '{print $NF}') - 1))
