@@ -43,7 +43,7 @@ jobs:
 
     - name: Deploy to Amazon ECS
       run: |
-        aws ecs update-service --cluster notification-cluster --service notification-service --force-new-deployment --task-definition notification-service-task:latest
+        aws ecs update-service --cluster notification-cluster --service notification-service --force-new-deployment --task-definition notification-service-task:6
 
     - name: Check ECS service stability and rollback if necessary
       run: |
