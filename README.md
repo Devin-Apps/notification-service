@@ -69,9 +69,40 @@ The following environment variables are required:
 
 These variables should be set in the `.env` file.
 
+## WhatsApp Notifications
+
+The service now supports sending WhatsApp notifications in addition to SMS. To send a WhatsApp notification, use the following endpoint:
+
+- Endpoint: `/api/v1/whatsappNotifications`
+- Method: `POST`
+- Content-Type: `application/json`
+
+Request body structure:
+```json
+{
+  "fromNumber": "+1234567890",
+  "message": "Your WhatsApp message",
+  "toNumber": "+0987654321"
+}
+```
+
+Example cURL command:
+```bash
+curl -X POST http://localhost:8080/api/v1/whatsappNotifications \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fromNumber": "+1234567890",
+    "message": "Hello from the Notification Service!",
+    "toNumber": "+0987654321"
+  }'
+```
+
+Note: Make sure to use valid WhatsApp-enabled phone numbers for both `fromNumber` and `toNumber`.
+
 ## Troubleshooting
 
 If you encounter any issues, please ensure that:
 
 1. Docker and Docker Compose are properly installed and running on your system.
-2. The `.env` file exists and cont
+2. The `.env` file exists and contains valid Twilio credentials.
+3. Your Twilio account is properly set up for WhatsApp messaging.

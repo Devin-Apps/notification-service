@@ -5,7 +5,9 @@ import io.dropwizard.Configuration
 import io.dropwizard.setup.Bootstrap
 import io.dropwizard.setup.Environment
 import com.notification.service.resource.NotificationResource
+import com.notification.service.resource.WhatsAppNotificationResource
 import com.notification.service.service.TwilioService
+import com.notification.service.service.WhatsAppNotificationService
 import com.notification.service.repository.TwilioNotificationRepository
 import org.slf4j.LoggerFactory
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -67,6 +69,13 @@ class NotificationApplication : Application<TwilioConfiguration>() {
         logger.debug("Initializing Notification Resource")
         val notificationResource = NotificationResource(twilioNotificationRepository)
         environment.jersey().register(notificationResource)
+
+        logger.debug("Initializing WhatsApp Notification Service")
+        val whatsAppNotificationService = WhatsAppNotificationService(configuration.twilioSettings)
+        logger.debug("Initializing WhatsApp Notification Resource")
+        val whatsAppNotificationResource = WhatsAppNotificationResource(whatsAppNotificationService)
+        environment.jersey().register(whatsAppNotificationResource)
+
         environment.jersey().register(HealthCheckResource())
         logger.info("Notification Service started successfully")
     }
